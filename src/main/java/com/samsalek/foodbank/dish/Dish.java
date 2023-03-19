@@ -1,18 +1,17 @@
-package com.samsalek.foodbank;
+package com.samsalek.foodbank.dish;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
 @Document
 public class Dish {
     @Id
-    private String id;
+    private String dishId;
 
     private String name;
     private String category;
