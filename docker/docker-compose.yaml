@@ -1,4 +1,6 @@
-version: "3.8"
+version: "3.9"
+name: foodbank
+
 services:
   mongodb:
     image: mongo:4.4.18
@@ -13,13 +15,13 @@ services:
   mongo-express:
     image: mongo-express:0.54.0
     container_name: mongo-express
-    restart: always
     ports:
       - 8081:8081
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
       - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
       - ME_CONFIG_MONGODB_SERVER=mongodb
+
 volumes:
   data: {}
 
