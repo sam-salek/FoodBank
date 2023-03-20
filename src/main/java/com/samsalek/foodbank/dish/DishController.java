@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dish")
+@RequestMapping("/api/v1/dish")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class DishController {
 
