@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/dish")
+@RequestMapping("/api/v1/dishes")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class DishController {
@@ -19,38 +21,45 @@ public class DishController {
     @Autowired
     private final DishService dishService;
 
-    @GetMapping(path = "{dishName}")
-    public Dish getDish(@PathVariable("dishName") String name) {
-        LOGGER.info("Getting the dish: " + name);
-        return dishService.getDishByName(name);
-    }
-
-    @GetMapping
-    public List<Dish> getDishes() {
+    @GetMapping()
+    public ResponseEntity<List<Dish>> getDishes() {
+        List<Dish> dishes = dishService.getDishes();
         LOGGER.info("Getting all dishes.");
-        return dishService.getDishes();
+        return new ResponseEntity<>(dishes, HttpStatus.OK);
     }
 
-    @PostMapping
-    public Dish addDish(@RequestBody Dish dish) {
-        LOGGER.info("Adding new dish: " + dish.getName());
-        return dishService.addDish(dish);
+    @GetMapping("/name/{dishName}")
+    public ResponseEntity<Dish> getDishByName(@PathVariable("dishName") String dishName) {
+        Dish dish = dishService.getDishByName(dishName);
+        LOGGER.info("Getting dish with name: " + dishName);
+        return new ResponseEntity<>(dish, HttpStatus.OK);
     }
 
-    @PutMapping(path = "{dishName}")
-    public void updateDish(@PathVariable("dishName") String name,
-                           @RequestParam(required = false) String newName,
-                           @RequestParam(required = false) String newCategory,
-                           @RequestParam(required = false) List<String> newIngredients) {
-        LOGGER.info("Updating dish: " + name);
-        Dish updatedDish = dishService.updateDish(name, newName, newCategory, newIngredients);
-        LOGGER.info("Update successful: " + updatedDish.toString());
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Dish> getDishById(@PathVariable("id") String id) {
+        Dish dish = dishService.getDishById(id);
+        LOGGER.info("Getting dish with id: " + id);
+        return new ResponseEntity<>(dish, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "{dishName}")
-    public void deleteDishByName(@PathVariable("dishName") String name) {
-        LOGGER.info("Deleting all dishes with name: " + name);
-        Long nDeleted = dishService.deleteDishByName(name);
-        LOGGER.info("Deleted " + nDeleted + " dish(es) with name: " + name);
+    @PostMapping("/add")
+    public ResponseEntity<String> addDish(@RequestBody Dish dish) {
+        dishService.addDish(dish);
+        LOGGER.info("Added new dish: " + dish.getName());
+        return new ResponseEntity<>("Dish added successfully", HttpStatus.CREATED);
+    }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<String> updateDish(@PathVariable("id") String id, @RequestBody Dish dish) {
+        dishService.updateDish(id, dish);
+        LOGGER.info("Updated dish with id: " + id);
+        return new ResponseEntity<>("Dish updated successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteDishById(@PathVariable("id") String id) {
+        dishService.deleteDishById(id);
+        LOGGER.info("Deleted dish with id: " + id);
+        return new ResponseEntity<>("Dish deleted successfully", HttpStatus.OK);
     }
 }
