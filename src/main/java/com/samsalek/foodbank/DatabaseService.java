@@ -10,12 +10,11 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class DatabaseInit implements ApplicationListener<ApplicationReadyEvent> {
+public class DatabaseService implements ApplicationListener<ApplicationReadyEvent> {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -28,13 +27,14 @@ public class DatabaseInit implements ApplicationListener<ApplicationReadyEvent> 
     }
 
     private void initDatabase() {
-        String dishInit = "init";
-        if (!dishRepository.existsByName(dishInit)) dishRepository.insert(new Dish(dishInit));
-        dishRepository.deleteByName(dishInit);
-        LOGGER.info("Initialized MongoDB collection");
+        // At least one document must be put into a collection for the collection to be created (if the collection doesn't exist already)
+        Dish init = new Dish();
+        dishRepository.insert(init);
+        dishRepository.delete(init);
+        LOGGER.info("Initialized MongoDB collection.");
 
-        // Insert test dish every time we start the app
-        Dish dish = new Dish("Taco", "Mexican", List.of("Tortilla", "Beef", "Vegetables", "Salsa"), LocalDateTime.now());
+        // Inserts test dish every time we start the app
+        Dish dish = new Dish("Taco", "Mexican", List.of("Tortilla", "Beef", "Vegetables", "Salsa"), List.of("Put it all in the bread.", "Eat."));
         dishRepository.insert(dish);
     }
 }

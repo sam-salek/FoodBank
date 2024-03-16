@@ -9,6 +9,5 @@ import java.util.List;
 public interface DishRepository extends MongoRepository<Dish, String> {
 
     List<Dish> findByName(String name);
-    Long deleteByName(String name);
     boolean existsByName(String name);
 }

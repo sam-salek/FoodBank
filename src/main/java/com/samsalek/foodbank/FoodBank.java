@@ -15,6 +15,11 @@ public class FoodBank {
 
 	@GetMapping("/")
 	public String root() {
-		return "The FoodBank API is up and running!";
+		return "FoodBank backend is online";
+	}
+
+	@GetMapping("/api/v1")
+	public String api() {
+		return "FoodBank API is up and running!";
 	}
 }
