@@ -1,5 +1,7 @@
 package com.samsalek.foodbank.dish;
 
+import com.samsalek.foodbank.DishNotFoundException;
+import com.samsalek.foodbank.InvalidDishNameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,40 +22,40 @@ public class DishService {
 
     public Dish getDishByName(String name) {
         List<Dish> dishes = dishRepository.findByName(name);
-        if (dishes.isEmpty()) throw new IllegalArgumentException("No dishes with name: " + name);
+        if (dishes.isEmpty()) throw new DishNotFoundException();
         return dishes.get(0);
     }
 
     public Dish getDishById(String id) {
         Optional<Dish> dish = dishRepository.findById(id);
-        if (dish.isEmpty()) throw new IllegalArgumentException("No dishes with id: " + id);
+        if (dish.isEmpty()) throw new DishNotFoundException(id);
         return dish.get();
     }
 
     public Dish addDish(Dish dish) {
         // Name check
-        if (dish.getName() == null) throw new IllegalArgumentException("Dish name cannot be null!");
-        if (dish.getName().length() == 0) throw new IllegalArgumentException("Dish name cannot be of length 0!");
-        if (dishRepository.existsByName(dish.getName())) throw new IllegalArgumentException("Dish with name \"" + dish.getName() + "\" already exists!");
+        if (dish.getName() == null) throw InvalidDishNameException.nullDishName();
+        if (dish.getName().length() == 0) throw InvalidDishNameException.emptyDishName();
+        if (dishRepository.existsByName(dish.getName())) throw InvalidDishNameException.duplicateDishName();
 
         return dishRepository.save(dish);
     }
 
     public void deleteDishById(String id) {
         // Id check
-        if (dishRepository.findById(id).isEmpty()) throw new IllegalArgumentException("No dishes with id: " + id);
+        if (dishRepository.findById(id).isEmpty()) throw new DishNotFoundException(id);
 
         dishRepository.deleteById(id);
     }
 
     public Dish updateDish(String id, Dish dish) {
         // Id check
-        if (dishRepository.findById(id).isEmpty()) throw new IllegalArgumentException("No dishes with id: " + id);
+        if (dishRepository.findById(id).isEmpty()) throw new DishNotFoundException(id);
 
         // Name check
-        if (dish.getName() == null) throw new IllegalArgumentException("Dish name cannot be null!");
-        if (dish.getName().length() == 0) throw new IllegalArgumentException("Dish name cannot be of length 0!");
-        if (dishRepository.existsByName(dish.getName())) throw new IllegalArgumentException("Dish with name \"" + dish.getName() + "\" already exists!");
+        if (dish.getName() == null) throw InvalidDishNameException.nullDishName();
+        if (dish.getName().length() == 0) throw InvalidDishNameException.emptyDishName();
+        if (dishRepository.existsByName(dish.getName())) throw InvalidDishNameException.duplicateDishName();
 
        dishRepository.deleteById(id);
        dish.setId(id);
