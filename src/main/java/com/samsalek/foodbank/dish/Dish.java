@@ -1,5 +1,7 @@
 package com.samsalek.foodbank.dish;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -12,6 +14,7 @@ import java.util.List;
 @Data
 @Document(collection = "dishes")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Dish {
     @Id
     private String id;
@@ -20,16 +23,7 @@ public class Dish {
     private String category = "Unknown";
     private List<String> ingredients = new ArrayList<>();
     private List<String> instructions = new ArrayList<>();
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime creationTime = LocalDateTime.now();
-
-    public Dish(String name) {
-        this.name = name;
-    }
-
-    public Dish(String name, String category, List<String> ingredients, List<String> instructions) {
-        this.name = name;
-        this.category = category;
-        this.ingredients = ingredients;
-        this.instructions = instructions;
-    }
 }
