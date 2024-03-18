@@ -15,7 +15,7 @@ public class InvalidDishNameException extends IllegalArgumentException {
     }
 
     public static InvalidDishNameException emptyDishName() {
-        return new InvalidDishNameException("Dish name cannot be of length 0");
+        return new InvalidDishNameException("Dish name cannot be empty");
     }
 
     public static InvalidDishNameException duplicateDishName() {

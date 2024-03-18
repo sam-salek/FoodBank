@@ -78,13 +78,13 @@ public class DishController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleInvalidDishName(HttpServletRequest req, InvalidDishNameException e) {
         LOGGER.error(e.getMessage() + ". Request: " + req.getServletPath(), e);
-        return "Invalid dish name";
+        return e.getMessage();
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(HttpServletRequest req, Exception e) {
         LOGGER.error("An error occurred while processing the request. Request: " + req.getServletPath(), e);
-        return "Error";
+        return "Internal server error";
     }
 }
