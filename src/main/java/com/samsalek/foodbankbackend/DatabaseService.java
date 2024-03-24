@@ -1,7 +1,7 @@
-package com.samsalek.foodbank;
+package com.samsalek.foodbankbackend;
 
-import com.samsalek.foodbank.dish.Dish;
-import com.samsalek.foodbank.dish.DishRepository;
+import com.samsalek.foodbankbackend.dish.Dish;
+import com.samsalek.foodbankbackend.dish.DishRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

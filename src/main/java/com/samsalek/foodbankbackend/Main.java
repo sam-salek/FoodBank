@@ -1,4 +1,4 @@
-package com.samsalek.foodbank;
+package com.samsalek.foodbankbackend;
 
 public class Main {
     public static void main(String[] args) {

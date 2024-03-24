@@ -1,7 +1,7 @@
-package com.samsalek.foodbank.dish;
+package com.samsalek.foodbankbackend.dish;
 
-import com.samsalek.foodbank.DishNotFoundException;
-import com.samsalek.foodbank.InvalidDishNameException;
+import com.samsalek.foodbankbackend.DishNotFoundException;
+import com.samsalek.foodbankbackend.InvalidDishNameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

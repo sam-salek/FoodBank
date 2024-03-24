@@ -1,6 +1,6 @@
-package com.samsalek.foodbank;
+package com.samsalek.foodbankbackend;
 
-import com.samsalek.foodbank.dish.Dish;
+import com.samsalek.foodbankbackend.dish.Dish;
 
 public class DishNotFoundException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.samsalek.foodbank;
+package com.samsalek.foodbankbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
