@@ -2,6 +2,18 @@ version: "3.9"
 name: foodbank
 
 services:
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      mongodb:
+        condition: service_started
+    links:
+      - mongodb
   mongodb:
     image: mongo:4.4.18
     container_name: mongodb
@@ -21,6 +33,9 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
       - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
       - ME_CONFIG_MONGODB_SERVER=mongodb
+    depends_on:
+      mongodb:
+        condition: service_started
 
 volumes:
   data: {}
