@@ -1,4 +1,4 @@
-package com.samsalek.foodbankbackend;
+package io.github.samsalmag.foodbankbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +15,7 @@ public class FoodBank {
 
 	@GetMapping("/")
 	public String root() {
-		return "FoodBank backend is online";
+		return "FoodBank backend is online!!!!!";
 	}
 
 	@GetMapping("/api/v1")

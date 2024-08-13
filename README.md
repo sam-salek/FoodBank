@@ -1,3 +1,3 @@
 # FoodBank
 
-Frontend: https://github.com/sam-salek/foodbank-frontend
+FoodBank Android: https://github.com/samsalmag/foodbank-android

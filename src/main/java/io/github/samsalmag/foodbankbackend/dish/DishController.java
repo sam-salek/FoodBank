@@ -1,7 +1,7 @@
-package com.samsalek.foodbankbackend.dish;
+package io.github.samsalmag.foodbankbackend.dish;
 
-import com.samsalek.foodbankbackend.DishNotFoundException;
-import com.samsalek.foodbankbackend.InvalidDishNameException;
+import io.github.samsalmag.foodbankbackend.InvalidDishNameException;
+import io.github.samsalmag.foodbankbackend.DishNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

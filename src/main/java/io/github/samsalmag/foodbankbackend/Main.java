@@ -1,4 +1,4 @@
-package com.samsalek.foodbankbackend;
+package io.github.samsalmag.foodbankbackend;
 
 public class Main {
     public static void main(String[] args) {

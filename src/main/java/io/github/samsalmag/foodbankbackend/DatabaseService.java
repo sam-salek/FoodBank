@@ -1,7 +1,7 @@
-package com.samsalek.foodbankbackend;
+package io.github.samsalmag.foodbankbackend;
 
-import com.samsalek.foodbankbackend.dish.Dish;
-import com.samsalek.foodbankbackend.dish.DishRepository;
+import io.github.samsalmag.foodbankbackend.dish.Dish;
+import io.github.samsalmag.foodbankbackend.dish.DishRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

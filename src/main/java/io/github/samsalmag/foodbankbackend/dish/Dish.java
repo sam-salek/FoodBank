@@ -1,4 +1,4 @@
-package com.samsalek.foodbankbackend.dish;
+package io.github.samsalmag.foodbankbackend.dish;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

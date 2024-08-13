@@ -1,4 +1,4 @@
-package com.samsalek.foodbankbackend;
+package io.github.samsalmag.foodbankbackend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
