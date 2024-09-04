@@ -1,6 +1,7 @@
 package io.github.samsalmag.foodbankbackend.dish;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.github.samsalmag.foodbankbackend.Ingredient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,9 @@ public class Dish {
     private String id;
 
     private String name;
-    private String category = "Unknown";
-    private List<String> ingredients = new ArrayList<>();
-    private List<String> instructions = new ArrayList<>();
+    private List<String> categories = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
+    private String instructions;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime creationTime = LocalDateTime.now();
