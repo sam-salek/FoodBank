@@ -30,9 +30,5 @@ public class DatabaseService implements ApplicationListener<ApplicationReadyEven
         dishRepository.insert(init);
         dishRepository.delete(init);
         LOGGER.info("Initialized MongoDB collection.");
-
-        // Inserts test dish every time we start the app
-        // Dish dish = new Dish("Taco", "Mexican", List.of("Tortilla", "Beef", "Vegetables", "Salsa"), List.of("Put it all in the bread.", "Eat."));
-        // dishRepository.insert(dish);
     }
 }
