@@ -26,4 +26,7 @@ public class Dish {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime creationTime = LocalDateTime.now();
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private LocalDateTime latestModTime = creationTime;
 }

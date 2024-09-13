@@ -19,4 +19,5 @@ public class DishResponseDTO {
     private List<Ingredient> ingredients;
     private String instructions;
     private LocalDateTime creationTime;
+    private LocalDateTime latestModTime;
 }

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,8 @@ public class DishService {
      */
     public DishResponseDTO updateDish(String id, DishRequestDTO dishRequest) {
         // Id check
-        if (dishRepository.findById(id).isEmpty()) throw new DishNotFoundException(id);
+        Optional<Dish> dishToUpdate = dishRepository.findById(id);
+        if (dishToUpdate.isEmpty()) throw new DishNotFoundException(id);
 
         // Name check
         if (dishRequest.getName() == null) throw InvalidDishNameException.nullDishName();
@@ -75,6 +77,8 @@ public class DishService {
         dishRepository.deleteById(id);
         Dish newDish = this.toDishEntity(dishRequest);
         newDish.setId(id);
+        newDish.setCreationTime(dishToUpdate.get().getCreationTime());
+        newDish.setLatestModTime(LocalDateTime.now());
 
         Dish savedDish = dishRepository.save(newDish);
         return this.toDishResponseDto(savedDish);
@@ -86,7 +90,8 @@ public class DishService {
                                     dish.getCategories(),
                                     dish.getIngredients(),
                                     dish.getInstructions(),
-                                    dish.getCreationTime());
+                                    dish.getCreationTime(),
+                                    dish.getLatestModTime());
     }
 
     private Dish toDishEntity(DishRequestDTO dishRequest) {
