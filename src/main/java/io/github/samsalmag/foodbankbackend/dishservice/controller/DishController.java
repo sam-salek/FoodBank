@@ -1,7 +1,10 @@
-package io.github.samsalmag.foodbankbackend.dish;
+package io.github.samsalmag.foodbankbackend.dishservice.controller;
 
-import io.github.samsalmag.foodbankbackend.InvalidDishNameException;
-import io.github.samsalmag.foodbankbackend.DishNotFoundException;
+import io.github.samsalmag.foodbankbackend.dishservice.dto.DishRequestDTO;
+import io.github.samsalmag.foodbankbackend.dishservice.dto.DishResponseDTO;
+import io.github.samsalmag.foodbankbackend.dishservice.exception.DishNotFoundException;
+import io.github.samsalmag.foodbankbackend.dishservice.exception.InvalidDishNameException;
+import io.github.samsalmag.foodbankbackend.dishservice.service.DishService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -23,48 +26,52 @@ public class DishController {
     @Autowired
     private final DishService dishService;
 
+    @GetMapping("/")
+    public String root() {
+        return "FoodBank's dish service is up and running!";
+    }
+
     @GetMapping("/all")
-    public List<Dish> getDishes() {
-        List<Dish> dishes = dishService.getDishes();
+    public List<DishResponseDTO> getAllDishes() {
+        List<DishResponseDTO> dishes = dishService.getAllDishes();
         LOGGER.info("Getting all dishes.");
         return dishes;
     }
 
     @GetMapping("/name/{dishName}")
-    public Dish getDishByName(@PathVariable("dishName") String dishName) {
-        Dish dish = dishService.getDishByName(dishName);
-        LOGGER.info("Getting dish with name " + dishName);
+    public DishResponseDTO getDishByName(@PathVariable("dishName") String dishName) {
+        DishResponseDTO dish = dishService.getDishByName(dishName);
+        LOGGER.info("Getting dish with name: " + dishName);
         return dish;
     }
 
     @GetMapping("/id/{id}")
-    public Dish getDishById(@PathVariable("id") String id) {
-        Dish dish = dishService.getDishById(id);
-        LOGGER.info("Getting dish with id " + id);
+    public DishResponseDTO getDishById(@PathVariable("id") String id) {
+        DishResponseDTO dish = dishService.getDishById(id);
+        LOGGER.info("Getting dish with id: " + id);
         return dish;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Dish addDish(@RequestBody Dish dish) {
-        LOGGER.info("Attempting to add dish: " + dish);
-        Dish newDish = dishService.addDish(dish);
-        LOGGER.info("Added new dish " + newDish.getName());
+    public DishResponseDTO addDish(@RequestBody DishRequestDTO dishRequest) {
+        DishResponseDTO newDish = dishService.addDish(dishRequest);
+        LOGGER.info("Added new dish: " + newDish.getName());
         return newDish;
     }
 
-    @PutMapping("/update/{id}")
-    public Dish updateDish(@PathVariable("id") String id, @RequestBody Dish dish) {
-        Dish updatedDish = dishService.updateDish(id, dish);
-        LOGGER.info("Updated dish with id " + id);
+    @PutMapping("/{id}")
+    public DishResponseDTO updateDish(@PathVariable("id") String id, @RequestBody DishRequestDTO dishRequest) {
+        DishResponseDTO updatedDish = dishService.updateDish(id, dishRequest);
+        LOGGER.info("Updated dish with id: " + id + ", with data of: " + dishRequest.toString());
         return updatedDish;
     }
 
-    @DeleteMapping("/remove/{id}")
+    @DeleteMapping("/{id}")
     public String deleteDishById(@PathVariable("id") String id) {
         dishService.deleteDishById(id);
-        LOGGER.info("Deleted dish with id " + id);
-        return "Dish deleted successfully";
+        LOGGER.info("Deleted dish with id: " + id);
+        return "Dish deleted successfully!";
     }
 
     @ExceptionHandler(DishNotFoundException.class)
