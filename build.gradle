@@ -6,7 +6,7 @@ plugins {
 
 group = 'io.github.samsalmag'
 version = '0.0.1-SNAPSHOT'
-description = 'Food Bank'
+description = 'FoodBank'
 
 repositories {
     mavenCentral()

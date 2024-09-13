@@ -1,4 +1,4 @@
-package io.github.samsalmag.foodbankbackend;
+package io.github.samsalmag.foodbankbackend.dishservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

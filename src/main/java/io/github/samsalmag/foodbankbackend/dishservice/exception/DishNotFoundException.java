@@ -1,6 +1,6 @@
-package io.github.samsalmag.foodbankbackend;
+package io.github.samsalmag.foodbankbackend.dishservice.exception;
 
-import io.github.samsalmag.foodbankbackend.dish.Dish;
+import io.github.samsalmag.foodbankbackend.dishservice.model.Dish;
 
 public class DishNotFoundException extends RuntimeException {
 

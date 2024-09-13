@@ -1,7 +1,6 @@
-package io.github.samsalmag.foodbankbackend.dish;
+package io.github.samsalmag.foodbankbackend.dishservice.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.github.samsalmag.foodbankbackend.Ingredient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

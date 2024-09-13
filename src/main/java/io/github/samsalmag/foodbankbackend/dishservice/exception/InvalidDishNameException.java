@@ -1,4 +1,4 @@
-package io.github.samsalmag.foodbankbackend;
+package io.github.samsalmag.foodbankbackend.dishservice.exception;
 
 public class InvalidDishNameException extends IllegalArgumentException {
 

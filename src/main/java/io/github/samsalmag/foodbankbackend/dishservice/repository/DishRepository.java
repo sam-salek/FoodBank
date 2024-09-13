@@ -1,5 +1,6 @@
-package io.github.samsalmag.foodbankbackend.dish;
+package io.github.samsalmag.foodbankbackend.dishservice.repository;
 
+import io.github.samsalmag.foodbankbackend.dishservice.model.Dish;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

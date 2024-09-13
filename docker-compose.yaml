@@ -2,8 +2,8 @@ version: "3.9"
 name: foodbank
 
 services:
-  backend:
-    container_name: backend
+  dish-service:
+    container_name: dish-service
     build:
       context: .
       dockerfile: Dockerfile
