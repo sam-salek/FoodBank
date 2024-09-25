@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class Ingredient {
 
     private String name;
-    private int amount;
+    private int quantity;
     private String unit;
 }
