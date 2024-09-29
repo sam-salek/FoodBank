@@ -26,11 +26,21 @@ public class DishController {
     @Autowired
     private final DishService dishService;
 
+    /**
+     * Root of the service. Can be used to check if the service is running.
+     *
+     * @return A message indicating the status of the service.
+     */
     @GetMapping("/")
     public String root() {
         return "FoodBank's dish service is up and running!";
     }
 
+    /**
+     * Fetches all dishes.
+     *
+     * @return A List of all dishes.
+     */
     @GetMapping("/all")
     public List<DishResponseDTO> getAllDishes() {
         List<DishResponseDTO> dishes = dishService.getAllDishes();
@@ -38,6 +48,12 @@ public class DishController {
         return dishes;
     }
 
+    /**
+     * Fetches a dish by name.
+     *
+     * @param dishName Name of the dish to be fetched.
+     * @return Dish with the provided name. Throws an exception if no such dish exists.
+     */
     @GetMapping("/name/{dishName}")
     public DishResponseDTO getDishByName(@PathVariable("dishName") String dishName) {
         DishResponseDTO dish = dishService.getDishByName(dishName);
@@ -45,6 +61,12 @@ public class DishController {
         return dish;
     }
 
+    /**
+     * Fetches a dish by ID.
+     *
+     * @param id ID of the dish to be fetched.
+     * @return Dish with the provided ID. Throws an exception if no such dish exists.
+     */
     @GetMapping("/id/{id}")
     public DishResponseDTO getDishById(@PathVariable("id") String id) {
         DishResponseDTO dish = dishService.getDishById(id);
@@ -52,6 +74,12 @@ public class DishController {
         return dish;
     }
 
+    /**
+     * Adds a new dish.
+     *
+     * @param dishRequest Requested dish to be created.
+     * @return The newly created dish object, if successful. Can throw exception if creation was not successful.
+     */
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public DishResponseDTO addDish(@RequestBody DishRequestDTO dishRequest) {
@@ -60,6 +88,13 @@ public class DishController {
         return newDish;
     }
 
+    /**
+     * Updates an existing dish with new data.
+     *
+     * @param id ID of the dish to update.
+     * @param dishRequest Requested dish to replace the existing dish with ID of {@code id}
+     * @return The updated dish with its new data.
+     */
     @PutMapping("/{id}")
     public DishResponseDTO updateDish(@PathVariable("id") String id, @RequestBody DishRequestDTO dishRequest) {
         DishResponseDTO updatedDish = dishService.updateDish(id, dishRequest);
@@ -67,6 +102,12 @@ public class DishController {
         return updatedDish;
     }
 
+    /**
+     * Deletes dish by ID.
+     * @param id ID of the dish to delete.
+     * @return A message indicating that the dish was successfully deleted.
+     *         Can throw an exception if a dish with the provided ID does not exist.
+     */
     @DeleteMapping("/{id}")
     public String deleteDishById(@PathVariable("id") String id) {
         dishService.deleteDishById(id);
@@ -74,6 +115,13 @@ public class DishController {
         return "Dish deleted successfully!";
     }
 
+    /**
+     * Handles {@link DishNotFoundException} by returning a '404 Not Found' response.
+     *
+     * @param req The HTTP request that caused the exception.
+     * @param e The {@link DishNotFoundException} that was thrown.
+     * @return A message indicating that the dish was not found.
+     */
     @ExceptionHandler(DishNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleDishNotFound(HttpServletRequest req, DishNotFoundException e) {
@@ -81,6 +129,13 @@ public class DishController {
         return "Dish not found";
     }
 
+    /**
+     * Handles {@link InvalidDishNameException} by returning a '400 Bad Request' response.
+     *
+     * @param req The HTTP request that caused the exception.
+     * @param e The {@link InvalidDishNameException} that was thrown.
+     * @return A message indicating why the dish name was invalid.
+     */
     @ExceptionHandler(InvalidDishNameException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleInvalidDishName(HttpServletRequest req, InvalidDishNameException e) {
@@ -88,6 +143,14 @@ public class DishController {
         return e.getMessage();
     }
 
+    /**
+     * Handles all exceptions that are not specifically caught by other handlers,
+     * returning a '500 Internal Server Error' response.
+     *
+     * @param req The HTTP request that caused the exception.
+     * @param e The {@link Exception} that was thrown.
+     * @return A message indicating that an internal server error occurred.
+     */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(HttpServletRequest req, Exception e) {
