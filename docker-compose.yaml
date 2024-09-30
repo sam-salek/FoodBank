@@ -6,7 +6,7 @@ services:
     container_name: dish-service
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dish-service/Dockerfile
     ports:
       - 8080:8080
     depends_on:
