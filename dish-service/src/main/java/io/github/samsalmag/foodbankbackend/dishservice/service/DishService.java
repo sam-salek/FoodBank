@@ -6,6 +6,7 @@ import io.github.samsalmag.foodbankbackend.dishservice.exception.DishNotFoundExc
 import io.github.samsalmag.foodbankbackend.dishservice.exception.InvalidDishNameException;
 import io.github.samsalmag.foodbankbackend.dishservice.repository.DishRepository;
 import io.github.samsalmag.foodbankbackend.dishservice.model.Dish;
+import io.github.samsalmag.foodbankbackend.dishservice.util.DishUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,19 +23,19 @@ public class DishService {
     private final DishRepository dishRepository;
 
     public List<DishResponseDTO> getAllDishes() {
-        return dishRepository.findAll().stream().map(this::toDishResponseDto).toList();
+        return dishRepository.findAll().stream().map(DishUtil::toDishResponseDto).toList();
     }
 
     public DishResponseDTO getDishByName(String name) {
         List<Dish> dishes = dishRepository.findByName(name);
         if (dishes.isEmpty()) throw new DishNotFoundException();
-        return dishes.stream().map(this::toDishResponseDto).toList().get(0);
+        return dishes.stream().map(DishUtil::toDishResponseDto).toList().get(0);
     }
 
     public DishResponseDTO getDishById(String id) {
         Optional<Dish> dish = dishRepository.findById(id);
         if (dish.isEmpty()) throw new DishNotFoundException(id);
-        return this.toDishResponseDto(dish.get());
+        return DishUtil.toDishResponseDto(dish.get());
     }
 
     public DishResponseDTO addDish(DishRequestDTO dishRequest) {
@@ -43,10 +44,10 @@ public class DishService {
         if (dishRequest.getName().length() == 0) throw InvalidDishNameException.emptyDishName();
         if (dishRepository.existsByName(dishRequest.getName())) throw InvalidDishNameException.duplicateDishName();
 
-        Dish newDish = this.toDishEntity(dishRequest);
+        Dish newDish = DishUtil.toDishEntity(dishRequest);
 
         Dish savedDish = dishRepository.save(newDish);
-        return this.toDishResponseDto(savedDish);
+        return DishUtil.toDishResponseDto(savedDish);
     }
 
     public void deleteDishById(String id) {
@@ -75,31 +76,12 @@ public class DishService {
         // Delete dish with the given id
         // Create new dish that will replace the deleted dish (by using same id as deleted dish)
         dishRepository.deleteById(id);
-        Dish newDish = this.toDishEntity(dishRequest);
+        Dish newDish = DishUtil.toDishEntity(dishRequest);
         newDish.setId(id);
         newDish.setCreationTime(dishToUpdate.get().getCreationTime());
         newDish.setLatestModTime(LocalDateTime.now());
 
         Dish savedDish = dishRepository.save(newDish);
-        return this.toDishResponseDto(savedDish);
-    }
-
-    private DishResponseDTO toDishResponseDto(Dish dish) {
-        return new DishResponseDTO(dish.getId(),
-                                    dish.getName(),
-                                    dish.getCategories(),
-                                    dish.getIngredients(),
-                                    dish.getInstructions(),
-                                    dish.getCreationTime(),
-                                    dish.getLatestModTime());
-    }
-
-    private Dish toDishEntity(DishRequestDTO dishRequest) {
-        Dish newDish = new Dish();
-        newDish.setName(dishRequest.getName());
-        newDish.setCategories(dishRequest.getCategories());
-        newDish.setIngredients(dishRequest.getIngredients());
-        newDish.setInstructions(dishRequest.getInstructions());
-        return newDish;
+        return DishUtil.toDishResponseDto(savedDish);
     }
 }
