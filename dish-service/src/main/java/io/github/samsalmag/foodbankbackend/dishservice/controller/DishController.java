@@ -52,7 +52,8 @@ public class DishController {
      * Fetches a dish by name.
      *
      * @param dishName Name of the dish to be fetched.
-     * @return Dish with the provided name. Throws an exception if no such dish exists.
+     * @return Dish with the provided name.
+     * @throws DishNotFoundException if dish with name of {@code dishName} does not exist.
      */
     @GetMapping("/name/{dishName}")
     public DishResponseDTO getDishByName(@PathVariable("dishName") String dishName) {
@@ -65,7 +66,8 @@ public class DishController {
      * Fetches a dish by ID.
      *
      * @param id ID of the dish to be fetched.
-     * @return Dish with the provided ID. Throws an exception if no such dish exists.
+     * @return Dish with the provided ID.
+     * @throws DishNotFoundException if dish with ID of {@code id} does not exist.
      */
     @GetMapping("/id/{id}")
     public DishResponseDTO getDishById(@PathVariable("id") String id) {
@@ -78,7 +80,8 @@ public class DishController {
      * Adds a new dish.
      *
      * @param dishRequest Requested dish to be created.
-     * @return The newly created dish object, if successful. Can throw exception if creation was not successful.
+     * @return The newly created dish object.
+     * @throws InvalidDishNameException if name of {@code dishRequest} is either {@code null}, empty, or already taken by another dish.
      */
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
@@ -94,6 +97,8 @@ public class DishController {
      * @param id ID of the dish to update.
      * @param dishRequest Requested dish to replace the existing dish with ID of {@code id}
      * @return The updated dish with its new data.
+     * @throws DishNotFoundException if dish to update (dish with ID of {@code id}) does not exist.
+     * @throws InvalidDishNameException if name of {@code dishRequest} is either {@code null}, empty, [TODO: or already taken by another dish]
      */
     @PutMapping("/{id}")
     public DishResponseDTO updateDish(@PathVariable("id") String id, @RequestBody DishRequestDTO dishRequest) {
@@ -106,7 +111,7 @@ public class DishController {
      * Deletes dish by ID.
      * @param id ID of the dish to delete.
      * @return A message indicating that the dish was successfully deleted.
-     *         Can throw an exception if a dish with the provided ID does not exist.
+     * @throws DishNotFoundException if dish with ID of {@code id} does not exist.
      */
     @DeleteMapping("/{id}")
     public String deleteDishById(@PathVariable("id") String id) {
