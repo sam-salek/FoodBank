@@ -98,7 +98,7 @@ public class DishController {
      * @param dishRequest Requested dish to replace the existing dish with ID of {@code id}
      * @return The updated dish with its new data.
      * @throws DishNotFoundException if dish to update (dish with ID of {@code id}) does not exist.
-     * @throws InvalidDishNameException if name of {@code dishRequest} is either {@code null}, empty, [TODO: or already taken by another dish]
+     * @throws InvalidDishNameException if name of {@code dishRequest} is either {@code null}, empty, or already taken by another dish.
      */
     @PutMapping("/{id}")
     public DishResponseDTO updateDish(@PathVariable("id") String id, @RequestBody DishRequestDTO dishRequest) {

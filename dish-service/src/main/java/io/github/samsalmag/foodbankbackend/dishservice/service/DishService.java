@@ -60,9 +60,9 @@ public class DishService {
     /**
      * Updates the dish of the given id, by replacing its data with the data of a new Dish.
      *
-     * @param id            ID of the dish to be updated.
-     * @param dishRequest   Dish request whose data will replace the old dish's data.
-     * @return              The newly updated dish.
+     * @param id ID of the dish to be updated.
+     * @param dishRequest Dish request whose data will replace the old dish's data.
+     * @return The newly updated dish.
      */
     public DishResponseDTO updateDish(String id, DishRequestDTO dishRequest) {
         // Id check
@@ -72,6 +72,12 @@ public class DishService {
         // Name check
         if (dishRequest.getName() == null) throw InvalidDishNameException.nullDishName();
         if (dishRequest.getName().length() == 0) throw InvalidDishNameException.emptyDishName();
+
+        // If dish with requested name already exists...
+        // Then check if it belongs to the dish being modified (ok scenario). If it belongs to another dish, then throw exception
+        if (dishRepository.existsByName(dishRequest.getName())) {
+            if (!dishToUpdate.get().getName().equals(dishRequest.getName())) throw InvalidDishNameException.duplicateDishName();
+        }
 
         // Delete dish with the given id
         // Create new dish that will replace the deleted dish (by using same id as deleted dish)
