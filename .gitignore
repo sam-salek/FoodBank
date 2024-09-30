@@ -23,7 +23,7 @@ target/
 
 ### Gradle ###
 .gradle
-/build/
+build/
 !src/**/build/
 gradle-app.setting
 !gradle-wrapper.jar
